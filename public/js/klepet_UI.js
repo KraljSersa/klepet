@@ -102,7 +102,7 @@ $(document).ready(function() {
     // ADD
      $('#seznam-uporabnikov div').click(function() {
       //klepetApp.procesirajUkaz('/zasebno ' + $(this).text());
-       $('#poslji-sporocilo').val('/zasebno ' + $(this).text() + ' ');
+       $('#poslji-sporocilo').val('/zasebno '+  '"' + $(this).text()+ '"' + ' ');
       
       $('#poslji-sporocilo').focus();
       // console.log($(this).text()); <= checking if it writes the proper name
