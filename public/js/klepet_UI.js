@@ -28,6 +28,13 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   }
+  if (sporocilo.search("http://" && (".png" || ".gif" || ".jpg"))) {
+    
+    console.log("yes");
+  }
+  else if (sporocilo.search("https://" && (".png" || ".gif" || ".jpg"))) {
+     console.log("yes");
+  }
 
   $('#poslji-sporocilo').val('');
 }
