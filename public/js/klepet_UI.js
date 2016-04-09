@@ -1,6 +1,7 @@
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
   var jeSlika = sporocilo.indexOf('<img') > -1;
+  var jeYT = sporocilo.indexOf('<iframe') > -1;
   if (jeSmesko) {
     sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
@@ -9,7 +10,11 @@ function divElementEnostavniTekst(sporocilo) {
     
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
     //console.log("yeah");
-  } else {
+  }
+  else if (jeYT) {
+     return $('<div style="font-weight: bold"></div>').html(sporocilo);
+  }
+  else {
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
   }
 }
@@ -22,6 +27,7 @@ function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
   sporocilo = dodajSmeske(sporocilo);
   sporocilo = dodajSlike(sporocilo);
+  sporocilo = dodajYT(sporocilo);
   var sistemskoSporocilo;
 
   if (sporocilo.charAt(0) == '/') {
@@ -148,5 +154,16 @@ function dodajSlike(vhodnoBesedilo) {
     temp = vhodnoBesedilo + vhodnoBesedilo.replace(/((http|https):\/\/.*(\.jpg|\.png|\.gif))/, "<img style=\"width:200px; margin-left:20px;\" src=\"$1\" \/>");
     //console.log(vhodnoBesedilo);
   }
+  return temp;
+}
+function dodajYT(vhodnoBesedilo) {
+  var temp = vhodnoBesedilo;
+  if (vhodnoBesedilo.search("https://www.youtube.com/watch?v=")) {
+    temp = vhodnoBesedilo + vhodnoBesedilo.replace(/https:\/\/www.youtube.com\/watch\?v=([^& ]*)/, '<br><iframe style= \"width="200"; height="150"; margin-left:20px;\"  src=https://www.youtube.com/embed/$1"  frameborder="0"  allowfullscreen></iframe>');
+    //temp = vhodnoBesedilo.replace(/https:\/\/www.youtube.com\/watch\?v=([^& ]*)/, vhodnoBesedilo + "<br><iframe style=\"width:200px; height:150px; margin-left:20px;\" src=\"https://www.youtube.com/embed/$1\" allowfullscreen></iframe>");
+  } 
+
+ 
+   
   return temp;
 }
