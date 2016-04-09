@@ -1,8 +1,14 @@
 function divElementEnostavniTekst(sporocilo) {
   var jeSmesko = sporocilo.indexOf('http://sandbox.lavbic.net/teaching/OIS/gradivo/') > -1;
+  var jeSlika = sporocilo.indexOf('<img') > -1;
   if (jeSmesko) {
     sporocilo = sporocilo.replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('&lt;img', '<img').replace('png\' /&gt;', 'png\' />');
     return $('<div style="font-weight: bold"></div>').html(sporocilo);
+  }
+  else if (jeSlika) {
+    
+    return $('<div style="font-weight: bold"></div>').html(sporocilo);
+    //console.log("yeah");
   } else {
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
   }
@@ -15,6 +21,7 @@ function divElementHtmlTekst(sporocilo) {
 function procesirajVnosUporabnika(klepetApp, socket) {
   var sporocilo = $('#poslji-sporocilo').val();
   sporocilo = dodajSmeske(sporocilo);
+  sporocilo = dodajSlike(sporocilo);
   var sistemskoSporocilo;
 
   if (sporocilo.charAt(0) == '/') {
@@ -22,19 +29,15 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     if (sistemskoSporocilo) {
       $('#sporocila').append(divElementHtmlTekst(sistemskoSporocilo));
     }
-  } else {
+  }
+  else {
     sporocilo = filtirirajVulgarneBesede(sporocilo);
     klepetApp.posljiSporocilo(trenutniKanal, sporocilo);
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
     $('#sporocila').scrollTop($('#sporocila').prop('scrollHeight'));
   }
-  if (sporocilo.search("http://" && (".png" || ".gif" || ".jpg"))) {
-    
-    console.log("yes");
-  }
-  else if (sporocilo.search("https://" && (".png" || ".gif" || ".jpg"))) {
-     console.log("yes");
-  }
+  
+  
 
   $('#poslji-sporocilo').val('');
 }
@@ -137,4 +140,13 @@ function dodajSmeske(vhodnoBesedilo) {
       preslikovalnaTabela[smesko] + "' />");
   }
   return vhodnoBesedilo;
+}
+function dodajSlike(vhodnoBesedilo) {
+  var temp = vhodnoBesedilo;
+  
+  if (vhodnoBesedilo.search(("http://" || "https://")  && (".png" || ".gif" || ".jpg"))) {
+    temp = vhodnoBesedilo + vhodnoBesedilo.replace(/((http|https):\/\/.*(\.jpg|\.png|\.gif))/, "<img style=\"width:200px; margin-left:20px;\" src=\"$1\" \/>");
+    //console.log(vhodnoBesedilo);
+  }
+  return temp;
 }
