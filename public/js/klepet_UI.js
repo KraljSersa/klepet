@@ -13,8 +13,7 @@ function divElementEnostavniTekst(sporocilo) {
   }
   else if (jeYT) {
      return $('<div style="font-weight: bold"></div>').html(sporocilo);
-  }
-  else {
+  } else {
     return $('<div style="font-weight: bold;"></div>').text(sporocilo);
   }
 }
@@ -35,8 +34,7 @@ function procesirajVnosUporabnika(klepetApp, socket) {
     if (sistemskoSporocilo) {
       $('#sporocila').append(divElementHtmlTekst(sistemskoSporocilo));
     }
-  }
-  else {
+  } else {
     sporocilo = filtirirajVulgarneBesede(sporocilo);
     klepetApp.posljiSporocilo(trenutniKanal, sporocilo);
     $('#sporocila').append(divElementEnostavniTekst(sporocilo));
@@ -151,19 +149,19 @@ function dodajSlike(vhodnoBesedilo) {
   var temp = vhodnoBesedilo;
   
   if (vhodnoBesedilo.search(("http://" || "https://")  && (".png" || ".gif" || ".jpg"))) {
-    temp = vhodnoBesedilo + vhodnoBesedilo.replace(/((http|https):\/\/.*(\.jpg|\.png|\.gif))/, "<img style=\"width:200px; margin-left:20px;\" src=\"$1\" \/>");
+    temp = vhodnoBesedilo.replace(/((http|https):\/\/.*(\.jpg|\.png|\.gif))/, vhodnoBesedilo + '<br><img style=\"width:200px; margin-left:20px;\" src=\"$1\" \/>');
     //console.log(vhodnoBesedilo);
   }
   return temp;
 }
 function dodajYT(vhodnoBesedilo) {
-  var temp = vhodnoBesedilo;
+  var tempa = vhodnoBesedilo;
   if (vhodnoBesedilo.search("https://www.youtube.com/watch?v=")) {
-    temp = vhodnoBesedilo + vhodnoBesedilo.replace(/https:\/\/www.youtube.com\/watch\?v=([^& ]*)/, '<br><iframe style= \"width="200"; height="150"; margin-left:20px;\"  src=https://www.youtube.com/embed/$1"  frameborder="0"  allowfullscreen></iframe>');
-    //temp = vhodnoBesedilo.replace(/https:\/\/www.youtube.com\/watch\?v=([^& ]*)/, vhodnoBesedilo + "<br><iframe style=\"width:200px; height:150px; margin-left:20px;\" src=\"https://www.youtube.com/embed/$1\" allowfullscreen></iframe>");
+    tempa = vhodnoBesedilo.replace(/https:\/\/www.youtube.com\/watch\?v=([^& ]*)/, vhodnoBesedilo + '<br><iframe style=\"width:200px; height:150px; margin-left:20px;\" src=\"https://www.youtube.com/embed/$1\" frameborder=0 allowfullscreen></iframe>');
+    
   } 
 
  
    
-  return temp;
+  return tempa;
 }
