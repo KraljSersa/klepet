@@ -145,7 +145,7 @@ function dodajSlike(vhodnoBesedilo) {
   var temp = vhodnoBesedilo;
   
   if (vhodnoBesedilo.search(("http://" || "https://")  && (".png" || ".gif" || ".jpg"))) {
-    temp = vhodnoBesedilo + vhodnoBesedilo.replace(/((http|https):\/\/.*(\.jpg|\.png|\.gif))/, "<img style=\"width:200px; margin-left:20px;\" src=\"$1\" \/>");
+    temp =  vhodnoBesedilo.replace(/((http|https):\/\/.*(\.jpg|\.png|\.gif))/, vhodnoBesedilo + '<br><img style=\"width:200px; margin-left:20px;\" src=\"$1\" \/>');
     //console.log(vhodnoBesedilo);
   }
   return temp;
