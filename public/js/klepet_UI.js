@@ -168,11 +168,9 @@ function dodajSlike(vhodnoBesedilo) {
   var temp = vhodnoBesedilo;
   
   if (vhodnoBesedilo.search(("http://" || "https://")  && (".png" || ".gif" || ".jpg"))) {
-<<<<<<< HEAD
+
     temp =  vhodnoBesedilo.replace(/((http|https):\/\/.*(\.jpg|\.png|\.gif))/, vhodnoBesedilo + '<br><img style=\"width:200px; margin-left:20px;\" src=\"$1\" \/>');
-=======
-    temp = vhodnoBesedilo.replace(/((http|https):\/\/.*(\.jpg|\.png|\.gif))/, vhodnoBesedilo + '<br><img style=\"width:200px; margin-left:20px;\" src=\"$1\" \/>');
->>>>>>> youtube
+
     //console.log(vhodnoBesedilo);
   }
   return temp;
