@@ -135,6 +135,16 @@ $(document).ready(function() {
     procesirajVnosUporabnika(klepetApp, socket);
     return false;
   });
+  socket.on('dregljaj', function(rezultat) {
+    $('#vsebina').jrumble();
+    $('#vsebina').trigger('startRumble');
+    var interval = 1500;
+    //interval = setInterval(function() {$('#vsebina').trigger('stopRumble'); }, 1500);
+    //clearInterval(interval);
+    setTimeout(function(){ $('#vsebina').trigger("stopRumble"); }, interval); 
+
+  });
+  
   
   
 });
